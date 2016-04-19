@@ -30,3 +30,9 @@ myButLast [] = error "Empty List!"
 myButLast [_] = error "List Too Small!"
 myButLast (x:y:[]) = x
 myButLast (x:xs) = myButLast xs
+
+-- Or... much simpler way:
+myButLast' :: [a] -> a
+myButLast' [] = error "Empty List!"
+myButLast' [_] = error "List Too Small!"
+myButLast' xs = xs !! (length (xs) - 2)
