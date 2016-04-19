@@ -53,3 +53,8 @@ elementAt _ 0 = error "First position is indexed 1!"
 elementAt [] _ = error "List too small!"
 elementAt (x:xs) 1 = x
 elementAt (x:xs) n = elementAt xs (n-1)
+
+-- More concise using the infix operator
+elementAt' :: [a] -> Int -> a
+elementAt' _ 0 = error "First position is indexed 1!"
+elementAt' xs n = xs !! (n-1)
