@@ -75,4 +75,42 @@ Prelude> myLength "Hello, world!"
 13
 -}
 
-myLength
+myLength :: [a] -> Int
+-- Approach: Recursively behead the list and keep a count
+myLength (x:xs) = 1 + myLength xs
+myLength []     = 0
+
+-- Primitive recursion not good. Lets use folds
+myLengthF xs = foldr step 0 xs
+               where step _ x = x + 1
+
+-- Another good one from haskell community
+myLength' :: [a] -> Int
+myLength' = sum . map ( \_ -> 1 )
+
+{-
+Problem 5 Reverse a list.
+
+Example in Haskell:
+Prelude> myReverse "A man, a plan, a canal, panama!"
+"!amanap ,lanac a ,nalp a ,nam A"
+Prelude> myReverse [1,2,3,4]
+[4,3,2,1]
+-}
+
+myReverse = foldl step []
+            where step x y = y:x
+
+{-
+Problem 6 Find out whether a list is a palindrome. A palindrome can be read forward or backward; e.g. (x a m a x).
+
+Example in Haskell:
+*Main> isPalindrome [1,2,3]
+False
+*Main> isPalindrome "madamimadam"
+True
+*Main> isPalindrome [1,2,4,8,16,8,4,2,1]
+True
+-}
+
+isPalindrome xs = xs == (reverse xs)
