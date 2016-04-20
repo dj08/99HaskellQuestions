@@ -37,6 +37,12 @@ myButLast' [] = error "Empty List!"
 myButLast' [_] = error "List Too Small!"
 myButLast' xs = xs !! (length (xs) - 2)
 
+-- Alternative, old code I wrote while learning hs
+internetLastButOne :: [a] -> a
+internetLastButOne xs = if length xs == 2
+                        then head xs
+                        else internetLastButOne (tail xs)
+
 {-
 Problem 3 Find the K'th element of a list. The first element in the
 list is indexed 1.
@@ -58,3 +64,15 @@ elementAt (x:xs) n = elementAt xs (n-1)
 elementAt' :: [a] -> Int -> a
 elementAt' _ 0 = error "First position is indexed 1!"
 elementAt' xs n = xs !! (n-1)
+
+{-
+Problem 4 Find the number of elements of a list.
+
+Example in Haskell:
+Prelude> myLength [123, 456, 789]
+3
+Prelude> myLength "Hello, world!"
+13
+-}
+
+myLength
