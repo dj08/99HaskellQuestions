@@ -114,3 +114,59 @@ True
 -}
 
 isPalindrome xs = xs == (reverse xs)
+
+{-
+Problem 7 Flatten a nested list structure.
+
+Transform a list, possibly holding lists as elements into a `flat' list by replacing each list with its elements (recursively).
+
+Example in Haskell:
+
+-- A new data type, because lists in Haskell are homogeneous.
+data NestedList a = Elem a | List [NestedList a]
+
+*Main> flatten (Elem 5)
+[5]
+*Main> flatten (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4], Elem 5]])
+[1,2,3,4,5]
+*Main> flatten (List [])
+[]
+-}
+
+data NestedList a = Elem a | List [NestedList a]
+                             deriving( Show ) -- Not really needed
+
+flatten :: NestedList a -> [a]
+flatten (Elem x) = [x]
+flatten (List []) = []
+flatten (List (x:xs)) = flatten x ++ flatten (List xs)
+-- Need (++) above instead of (:) because flatten x could return a list instead
+-- More haskellish way: flatten x has type [a], not 'a'. Hence (++), not (:)
+
+-- Now using folds, since recursion is primtive...
+flatten' :: NestedList a -> [a]
+flatten' (Elem x) = [x] 		-- Base case
+flatten' (List xs) = foldr (++) [] $ map flatten' xs
+
+{-
+Problem 8 Eliminate consecutive duplicates of list elements.
+
+If a list contains repeated elements they should be replaced with a single copy of the element. The order of the elements should not be changed.
+
+Example in Haskell:
+> compress "aaaabccaadeeee"
+"abcade"
+-}
+
+compress :: Eq a => [a] -> [a]
+compress [] = []
+compress [x] = [x]
+compress (x:y:xs)
+  | x /= y	= x : compress (y:xs)
+  | otherwise	= compress (y:xs)
+
+-- Using folds... not working for some reason...
+compress' :: Eq a => [a] -> [a]
+compress' xs = foldr step [] xs
+  where step x y | x == y    = [x]
+                 | otherwise = x : y
