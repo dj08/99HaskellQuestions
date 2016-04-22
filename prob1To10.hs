@@ -183,3 +183,19 @@ Example in Haskell:
 pack :: (Eq a) => [a] -> [[a]]
 pack [] = []
 pack xs@(y:ys) = (takeWhile (== y) xs) : pack (dropWhile (== y) xs)
+
+{-
+
+Problem 10 Run-length encoding of a list. Use the result of problem
+P09 to implement the so-called run-length encoding data compression
+method. Consecutive duplicates of elements are encoded as lists
+(N E) where N is the number of duplicates of the element E.
+
+Example in Haskell:
+Prelude> encode "aaaabccaadeeee"
+[(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
+-}
+
+encode :: Eq a => [a] -> [(Int, a)]
+encode xs = map f $ pack xs
+            where f y  = (length y, head y)
