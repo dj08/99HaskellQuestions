@@ -159,14 +159,27 @@ Example in Haskell:
 -}
 
 compress :: Eq a => [a] -> [a]
-compress [] = []
-compress [x] = [x]
-compress (x:y:xs)
-  | x /= y	= x : compress (y:xs)
-  | otherwise	= compress (y:xs)
+compress (x:ys@(y:_))
+  | x /= y	= x : compress ys
+  | otherwise	= compress ys
+compress x = x -- Type declaration takes care of the rest
 
--- Using folds... not working for some reason...
+-- Using folds... not very convincing somehow...
 compress' :: Eq a => [a] -> [a]
 compress' xs = foldr step [] xs
-  where step x y | x == y    = [x]
-                 | otherwise = x : y
+  where step x [] = [x]
+        step x y | x == head y	= y
+                 | otherwise	= x : y
+
+{-
+Problem 9 Pack consecutive duplicates of list elements into sublists. If a list contains repeated elements they should be placed in separate sublists.
+
+Example in Haskell:
+*Main> pack ['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 
+             'a', 'd', 'e', 'e', 'e', 'e']
+["aaaa","b","cc","aa","d","eeee"]
+-}
+
+pack :: (Eq a) => [a] -> [[a]]
+pack [] = []
+pack xs@(y:ys) = (takeWhile (== y) xs) : pack (dropWhile (== y) xs)
