@@ -22,7 +22,7 @@ encode :: Eq a => [a] -> [(Int, a)]
 encode xs = map f $ pack xs
             where f y  = (length y, head y)
 
-encodeModified :: [a] -> [ElemWithCount a]
-encodeModified xs = map f (encode xs)
+encodeModified :: Eq a => [a] -> [ElemWithCount a]
+encodeModified xs = map f (pack xs)
 	       where f y | length y == 1 = Single (head y)
 	       	       	 | otherwise     = Multiple (length y) (head y)
