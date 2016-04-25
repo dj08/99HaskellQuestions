@@ -70,3 +70,32 @@ encodeDirect :: Eq a => [a] -> [ElemWithCount a]
 encodeDirect xs = map g (encode' xs)
                   where g (1, x) = Single x
                         g (n, x) = Multiple n x
+
+{-
+Problem 14 Duplicate the elements of a list.
+
+Example in Haskell:
+> dupli [1, 2, 3]
+[1,1,2,2,3,3]
+-}
+
+dupli :: [a] -> [a]
+dupli xs = concatMap f xs
+           where f x = [x, x]
+
+{-
+Problem 15 Replicate the elements of a list a given number of times.
+
+Example in Haskell:
+> repli "abc" 3
+"aaabbbccc"
+-}
+
+
+repli :: [a] -> Int -> [a]
+repli xs n = concatMap f xs
+             where
+               f x = take n $ repeat x
+
+{-
+
