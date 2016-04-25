@@ -29,7 +29,8 @@ encodeModified xs = map f (pack xs)
 {-
 Problem 12 Decode a run-length encoded list.
 
-Given a run-length code list generated as specified in problem 11. Construct its uncompressed version.
+Given a run-length code list generated as specified in problem
+11. Construct its uncompressed version.
 
 Example in Haskell:
 P12> decodeModified 
@@ -39,7 +40,33 @@ P12> decodeModified
 -}
 
 decodeModified :: [ElemWithCount a] -> [a]
-decodeModified xs = foldr (++) [] (map g xs)
+decodeModified xs = concat (map g xs)
                     where
                       g (Single x) = [x]
                       g (Multiple n x) = take n $ repeat x
+
+{-
+Problem 13 Run-length encoding of a list (direct solution).
+
+Implement the so-called run-length encoding data compression method
+directly. i.e. don't explicitly create the sublists containing the
+duplicates, as in problem 9, but only count them. As in problem P11,
+simplify the result list by replacing the singleton lists (1 X) by X.
+
+Example in Haskell:
+P13> encodeDirect "aaaabccaadeeee"
+[Multiple 4 'a',Single 'b',Multiple 2 'c',
+ Multiple 2 'a',Single 'd',Multiple 4 'e']
+-}
+
+encode' :: Eq a => [a] -> [(Int, a)]
+encode' xs = foldr f [] xs
+             where
+               f x []                       = [(1, x)]
+               f x (y@(a,b):ys) | x == b    = (1+a, x) : ys
+                                | otherwise = (1, x) : y : ys
+
+encodeDirect :: Eq a => [a] -> [ElemWithCount a]
+encodeDirect xs = map g (encode' xs)
+                  where g (1, x) = Single x
+                        g (n, x) = Multiple n x
