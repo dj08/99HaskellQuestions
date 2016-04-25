@@ -98,4 +98,22 @@ repli xs n = concatMap f xs
                f x = take n $ repeat x
 
 {-
+Problem 16 Drop every N'th element from a list.
 
+Example in Haskell:
+*Main> dropEvery "abcdefghik" 3
+"abdeghk"
+-}
+
+dropEvery :: [a] -> Int -> [a]
+dropEvery [] _ = []
+dropEvery xs n = (take (n-1) xs) ++ (dropEvery (drop (n) xs) n)
+
+-- Using HOFs?
+dropEvery' :: [a] -> Int -> [a]
+dropEvery' xs n = map snd (filter f (zip [1..] xs))
+                  where f (k, x) = k `rem` n /= 0
+
+-- Sometimes things are better with list comprehension
+dropEvery'' :: [a] -> Int -> [a]
+dropEvery'' xs n = [ x | (k, x) <- (zip [1..] xs), k `mod` n /= 0 ]
