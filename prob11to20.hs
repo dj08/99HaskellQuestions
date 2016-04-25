@@ -26,3 +26,20 @@ encodeModified :: Eq a => [a] -> [ElemWithCount a]
 encodeModified xs = map f (pack xs)
 	       where f y | length y == 1 = Single (head y)
 	       	       	 | otherwise     = Multiple (length y) (head y)
+{-
+Problem 12 Decode a run-length encoded list.
+
+Given a run-length code list generated as specified in problem 11. Construct its uncompressed version.
+
+Example in Haskell:
+P12> decodeModified 
+       [Multiple 4 'a',Single 'b',Multiple 2 'c',
+        Multiple 2 'a',Single 'd',Multiple 4 'e']
+"aaaabccaadeeee"
+-}
+
+decodeModified :: [ElemWithCount a] -> [a]
+decodeModified xs = foldr (++) [] (map g xs)
+                    where
+                      g (Single x) = [x]
+                      g (Multiple n x) = take n $ repeat x
