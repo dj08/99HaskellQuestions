@@ -165,3 +165,15 @@ Examples in Haskell:
 rotate :: (Enum a) => [a] -> Int -> [a]
 rotate xs n = [(f n) .. last xs] ++ [head xs .. (f (n-1))]
               where f k = xs !! (k `mod` length xs)
+
+{-
+Problem 20 Remove the K'th element from a list.
+
+Example in Haskell:
+
+*Main> removeAt 2 "abcd"
+('b',"acd")
+-}
+
+removeAt :: (Enum a) => Int -> [a] -> (a, [a])
+removeAt n xs = ((xs !! (n-1)), [ x | (i, x) <- zip [1..] xs, i /= n])
