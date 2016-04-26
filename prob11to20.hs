@@ -149,3 +149,19 @@ slice :: (Enum a) => [a] -> Int -> Int -> [a]
 slice [] _ _ = []
 slice xs m n = [(xs !! (m-1)) .. (xs !! (n-1))]
 
+{-
+Problem 19 Rotate a list N places to the left.
+
+Hint: Use the predefined functions length and (++).
+
+Examples in Haskell:
+*Main> rotate ['a','b','c','d','e','f','g','h'] 3
+"defghabc"
+ 
+*Main> rotate ['a','b','c','d','e','f','g','h'] (-2)
+"ghabcdef"
+-}
+
+rotate :: (Enum a) => [a] -> Int -> [a]
+rotate xs n = [(f n) .. last xs] ++ [head xs .. (f (n-1))]
+              where f k = xs !! (k `mod` length xs)
