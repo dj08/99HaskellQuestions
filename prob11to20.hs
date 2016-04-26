@@ -117,3 +117,18 @@ dropEvery' xs n = map snd (filter f (zip [1..] xs))
 -- Sometimes things are better with list comprehension
 dropEvery'' :: [a] -> Int -> [a]
 dropEvery'' xs n = [ x | (k, x) <- (zip [1..] xs), k `mod` n /= 0 ]
+
+{-
+Problem 17 Split a list into two parts; the length of the first part is given.
+
+Do not use any predefined predicates.
+
+Example in Haskell:
+*Main> split "abcdefghik" 3
+("abc", "defghik")
+-}
+
+split :: [a] -> Int -> ([a], [a])
+split xs 0 = ([], xs)
+split [] _ = error "List too short"
+split (x:xs) n = (x:(fst (split xs (n-1))), snd (split xs (n-1)))
