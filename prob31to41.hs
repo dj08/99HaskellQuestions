@@ -12,6 +12,9 @@ isPrime :: Integer -> Bool
 probablePrimes = 2 : 3 : concatMap f (zip [5, 11 ..] [7, 13 ..])
                  where f (x, y) = [x, y]
 
+-- Better like this
+probablePrimes' = 2 : 3 : [ x+i | x <- [6, 12..], i <- [-1, 1] ]
+
 isPrime x = foldr g True (takeWhile (<= (ceiling (sqrt (fromInteger x))))
                           probablePrimes)
   where

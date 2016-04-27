@@ -19,16 +19,23 @@ False True False
 False False False
 -}
 
-and2, or2, nand2, nor2, xor2, impl2, equ2 :: Bool -> Bool -> Bool
+and2, or2, nand2, nor2, xor2, impl2, equ2, nexor2 :: Bool -> Bool -> Bool
 
--- First define equality, since we can use it in future solutions
-equ2 True True = True
-equ2 False False = True
-equ2 _ _ = False
+-- First define equality and negation, since we can use it in future solutions
+and2 = (&&)
+or2  = (||)
+equ2 = (==)
 
-and2 a b = foldr (equ2) True [a, b, True]
-or2 = undefined
-xor2 = undefined
-nand2 = undefined
-nor2 = undefined
-impl2 = undefined
+nexor2 a b = foldr (equ2) True [a, b] -- More like, nequ2
+xor2 a b = not $ nexor2 a b 
+
+nand2 a b = not $ and2 a b
+nor2 a b = not $ or2 a b
+impl2 a b = (not a) `or2` b
+
+table :: (Bool -> Bool -> Bool) -> IO ()
+table f = putStrLn $ concatMap (++ "\n" )
+          [show a ++ " " ++ show b ++ " " ++ show (f a b)
+          | a <- [True, False], b <- [True, False] ]
+
+tableTuples f = [(a, b, (f a b)) | a <- [True, False], b <- [True, False] ]

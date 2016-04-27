@@ -1,3 +1,4 @@
+import System.Random -- needed prob 23 onwards
 {-
 Problem 21 Insert an element at a given position into a list.
 
@@ -25,3 +26,15 @@ Prelude> range 4 9
 range :: Int -> Int -> [Int]
 range m n = [m..n]
 
+{-
+Problem 23
+Extract a given number of randomly selected elements from a list.
+
+Example in Haskell:
+Prelude System.Random>rnd_select "abcdefgh" 3 >>= putStrLn
+eda
+-}
+
+rnd_select :: [a] -> Int -> [a] -- Do we have to return a string?
+rnd_select xs n = (xs !! f) : rnd_select xs (n-1)
+                  where f = getStdRandom (randomR (1, length xs))
