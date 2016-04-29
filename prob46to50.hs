@@ -39,3 +39,5 @@ table f = putStrLn $ concatMap (++ "\n" )
           | a <- [True, False], b <- [True, False] ]
 
 tableTuples f = [(a, b, (f a b)) | a <- [True, False], b <- [True, False] ]
+
+

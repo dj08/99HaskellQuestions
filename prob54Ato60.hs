@@ -64,5 +64,6 @@ isReflection b1 b2 = isEqIgnoringName b1 b2
         isEqIgnoringName (Branch _ t1 t2) (Branch _ t3 t4) =
           (isEqIgnoringName t2 t3) && (isEqIgnoringName t1 t4)
                      
-
+-- Even simpler, courtesy haskell wiki solutions page:
+symmetric' t = isReflection t t
 
