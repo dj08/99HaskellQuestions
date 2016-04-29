@@ -57,12 +57,10 @@ symmetric (Branch _ b1 b2) = isReflection b1 b2
 -- An equality checker just ignoring the branch name is not going to
 -- work.  We need a symmetry - hence a mirror reflection check.
 isReflection :: Tree a -> Tree a -> Bool
-isReflection b1 b2 = isEqIgnoringName b1 b2
-  where isEqIgnoringName Empty Empty = True
-        isEqIgnoringName Empty _     = False
-        isEqIgnoringName _     Empty = False
-        isEqIgnoringName (Branch _ t1 t2) (Branch _ t3 t4) =
-          (isEqIgnoringName t2 t3) && (isEqIgnoringName t1 t4)
+isReflection Empty Empty = True
+isReflection (Branch _ t1 t2) (Branch _ t3 t4) =
+          (isReflection t2 t3) && (isReflection t1 t4)
+isReflection _     _     = False -- The type system ensures no scrap comes here
                      
 -- Even simpler, courtesy haskell wiki solutions page:
 symmetric' t = isReflection t t
