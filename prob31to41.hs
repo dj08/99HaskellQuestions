@@ -31,4 +31,15 @@ Example in Haskell:
 
 myGCD :: Int -> Int -> Int
 myGCD x 0 = abs x
-myGCD a b = myGCD b (mod a b) 
+myGCD a b = myGCD b (mod a b)
+
+{-
+Problem 33 Determine whether two positive integer numbers are coprime. Two numbers are coprime if their greatest common divisor equals 1.
+
+Example in Haskell:
+* coprime 35 64
+True
+-}
+
+coprime :: Int -> Int -> Bool
+coprime a b = myGCD a b == 1
