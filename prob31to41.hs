@@ -20,3 +20,15 @@ isPrime x = foldr g True (takeWhile (<= (ceiling (sqrt (fromInteger x))))
   where
     g y acc = ( mod x y /= 0 ) && acc
     
+
+{-
+Problem 32 Determine the greatest common divisor of two positive integer numbers. Use Euclid's algorithm.
+
+Example in Haskell:
+[myGCD 36 63, myGCD (-3) (-6), myGCD (-3) 6]
+[9,3,3]
+-}
+
+myGCD :: Int -> Int -> Int
+myGCD x 0 = abs x
+myGCD a b = myGCD b (mod a b) 
