@@ -50,3 +50,27 @@ Example in Haskell:
 True-}
 
 coprime m n = gcd m n == 1
+
+{-
+Problem 34 Calculate Euler's totient function phi(m).
+
+Euler's so-called totient function phi(m) is defined as the number of
+positive integers r (1 <= r < m) that are coprime to m.
+
+Example: m = 10: r = 1,3,7,9; thus phi(m) = 4. Note the special case:
+phi(1) = 1.
+
+Example in Haskell:
+* totient 10
+4-}
+
+totient m = length $ filter (coprime m) [1..m-1]
+
+{-
+*Main> map totient [1..20]
+[0,1,2,2,4,2,6,4,6,4,10,4,12,6,8,8,16,6,18,8]
+
+Note that prime numbers constantly come up as the local maxima of the
+totient function...-}
+
+
