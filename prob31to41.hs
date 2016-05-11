@@ -85,7 +85,3 @@ Example in Haskell:
 
 primeFactors m = undefined
 
-{-
-
-
-
