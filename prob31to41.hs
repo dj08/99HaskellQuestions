@@ -71,6 +71,21 @@ totient m = length $ filter (coprime m) [1..m-1]
 [0,1,2,2,4,2,6,4,6,4,10,4,12,6,8,8,16,6,18,8]
 
 Note that prime numbers constantly come up as the local maxima of the
-totient function...-}
+totient function... obviously! In fact, prime numbers will NECESSARILY
+have totient m = m-1. -}
+
+{-
+Problem 35 Determine the prime factors of a given positive
+integer. Construct a flat list containing the prime factors in
+ascending order.
+
+Example in Haskell:
+> primeFactors 315
+[3, 3, 5, 7]-}
+
+primeFactors m = undefined
+
+{-
+
 
 
