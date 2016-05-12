@@ -83,5 +83,37 @@ Example in Haskell:
 > primeFactors 315
 [3, 3, 5, 7]-}
 
-primeFactors m = undefined
+-- There is going to be only 1 such list possible. We don't need to
+-- check for prime factors if we are checking in ascending order!
 
+-- A no brainer first
+primeFactors :: Integer -> [Integer]
+primeFactors m
+  | isPrime m = [m]
+  | otherwise = factor : primeFactors (m `div` factor)
+  where
+    limit = truncate (sqrt (fromIntegral m))
+    factors = filter (isPrime) [ x | x <- [2..limit], rem m x == 0 ]
+    factor = head factors
+
+-- Bit more intelligent - identifying prime divisors by ascesion.
+primeFactors' :: Integer -> [Integer]
+primeFactors' m = foldr f [] (take (fromInteger limit) (repeat [2..limit]))
+   where
+     limit = truncate (sqrt (fromInteger m))
+     f x acc | quot' `rem` res == 0 = res:acc
+             | otherwise            = acc
+                 where
+                   res = head (filter (\y -> rem m y == 0) x)
+                   quot' = foldr g m acc
+                          where g n acc2 = acc2 `div` n
+
+{-
+This doesn't work, because the list is traversed only once...
+primeFactors' m = foldr f [] [2..limit]
+   where limit = truncate (sqrt (fromInteger m))
+         f x acc | quot `rem` x == 0 = x:acc
+                 | otherwise         = acc
+                 where quot = foldr g m acc
+                              where g n acc2 = acc2 `div` n
+-}
